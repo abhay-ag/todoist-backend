@@ -4,7 +4,7 @@ const actionSchema = new mongoose.Schema(
   {
     action: {
       type: String,
-      enum: ["Change Priority", "Update Status"],
+      enum: ["Update Priority", "Update Status", "Update Content"],
       required: true,
     },
     oldValue: {
@@ -35,3 +35,6 @@ const editSchema = new mongoose.Schema({
     default: [],
   },
 });
+
+const EditTodo = mongoose.model("EditTodo", editSchema);
+export default EditTodo;
