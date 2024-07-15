@@ -6,6 +6,7 @@ import bodyParser from "body-parser";
 
 // routes
 import UserRouter from "./routes/user.js";
+import TodoRouter from "./routes/todo.js";
 
 dotenv.config();
 const port = process.env.PORT || 8080;
@@ -24,6 +25,7 @@ mongoose
   });
 
 app.use("/user", UserRouter);
+app.use("/todo", TodoRouter);
 
 app.listen(port, () => {
   console.log("Running server on PORT: ", port);

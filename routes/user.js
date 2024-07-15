@@ -1,5 +1,6 @@
 import express from "express";
 import { User } from "../models/user.model.js";
+import jwt from "jsonwebtoken";
 
 const UserRouter = express.Router();
 
@@ -13,9 +14,12 @@ UserRouter.post("/login", async (req, res) => {
       if (!resp || !(await resp.comparePassword(password))) {
         throw new Error();
       }
-      console.log(resp);
+      const token = jwt.sign({ id: resp._id }, process.env.JWT_SECRET, {
+        expiresIn: "48h",
+      });
       res.status(200).json({
         user: resp,
+        token,
       });
     } catch {
       res.status(401).json({ message: "Details Mismatch" });
@@ -31,7 +35,10 @@ UserRouter.post("/signup", async (req, res) => {
     try {
       const user = new User({ email, password });
       await user.save();
-      res.status(200).json({ user });
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+        expiresIn: "48h",
+      });
+      res.status(200).json({ user, token });
     } catch {
       res.status(400).json({ message: "Not a valid email" });
     }
