@@ -6,10 +6,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     unique: true,
     required: true,
-    validate: (v) => {
-      return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/.test(v);
+    validate: {
+      validator: function (v) {
+        return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(v);
+      },
+      message: "Invalid email format",
     },
-    message: "Invalid e-mail format!",
   },
   password: {
     type: String,
@@ -17,7 +19,7 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-userSchema.pre("save", async (next) => {
+userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     return next();
   }
