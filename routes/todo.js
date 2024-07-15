@@ -100,4 +100,14 @@ TodoRouter.put("/update/:taskId", async (req, res) => {
   res.status(200).json({ message: "true" });
 });
 
+TodoRouter.delete("/delete/:todoId", async (req, res) => {
+  const todoId = req.params.todoId;
+  await EditTodo.deleteOne({ todoId });
+  await TodoModel.deleteOne({ _id: todoId });
+
+  res.status(200).json({
+    message: "true",
+  });
+});
+
 export default TodoRouter;
