@@ -36,9 +36,9 @@ TodoRouter.post("/new", async (req, res) => {
   res.status(200).json({ message: "true" });
 });
 
-TodoRouter.get("/user/:userId", async (req, res) => {
+TodoRouter.get("/user", async (req, res) => {
   try {
-    const userId = req.params.userId;
+    const userId = req.user.id;
     if (!userId) {
       throw new Error();
     }

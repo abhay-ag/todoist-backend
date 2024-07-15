@@ -18,7 +18,6 @@ UserRouter.post("/login", async (req, res) => {
         expiresIn: "48h",
       });
       res.status(200).json({
-        user: resp,
         token,
       });
     } catch {
@@ -38,7 +37,7 @@ UserRouter.post("/signup", async (req, res) => {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
         expiresIn: "48h",
       });
-      res.status(200).json({ user, token });
+      res.status(200).json({ token });
     } catch {
       res.status(400).json({ message: "Not a valid email" });
     }
