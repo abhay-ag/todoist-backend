@@ -4,12 +4,11 @@ const actionSchema = new mongoose.Schema(
   {
     action: {
       type: String,
-      enum: ["Update Priority", "Update Status", "Update Content"],
+      enum: ["Update Priority", "Update Status", "Update Content", "Creation"],
       required: true,
     },
     oldValue: {
       type: String,
-      required: true,
     },
     newValue: {
       type: String,
@@ -29,7 +28,7 @@ const editSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Todos",
   },
-  action: {
+  actions: {
     required: true,
     type: [actionSchema],
     default: [],
