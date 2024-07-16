@@ -35,7 +35,7 @@ TodoRouter.post("/new", async (req, res) => {
   });
 
   await init.save();
-  res.status(200).json({ message: "true" });
+  res.status(200).json({ todo });
 });
 
 TodoRouter.get("/user", async (req, res) => {
@@ -49,7 +49,11 @@ TodoRouter.get("/user", async (req, res) => {
       throw new Error();
     }
 
-    const resp = await TodoModel.find({ userId: userId });
+    const resp = await TodoModel.find({ userId: userId }).sort({
+      createdAt: -1,
+    });
+    delete resp.userId;
+    delete resp.__v;
     res.status(200).json({ todos: resp });
   } catch {
     res.status(400).json({ message: "Bad Request" });
