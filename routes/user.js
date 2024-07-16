@@ -14,9 +14,7 @@ UserRouter.post("/login", async (req, res) => {
       if (!resp || !(await resp.comparePassword(password))) {
         throw new Error();
       }
-      const token = jwt.sign({ id: resp._id }, process.env.JWT_SECRET, {
-        expiresIn: "48h",
-      });
+      const token = jwt.sign({ id: resp._id }, process.env.JWT_SECRET);
       res.status(200).json({
         token,
       });
@@ -34,9 +32,7 @@ UserRouter.post("/signup", async (req, res) => {
     try {
       const user = new User({ email, password });
       await user.save();
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-        expiresIn: "48h",
-      });
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
       res.status(200).json({ token });
     } catch {
       res.status(400).json({ message: "Not a valid email" });

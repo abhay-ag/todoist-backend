@@ -4,7 +4,14 @@ const actionSchema = new mongoose.Schema(
   {
     action: {
       type: String,
-      enum: ["Update Priority", "Update Status", "Update Content", "Creation"],
+      enum: [
+        "Update Priority",
+        "Update Status",
+        "Update Content",
+        "Creation",
+        "Update Title",
+        "Update Due Date",
+      ],
       required: true,
     },
     oldValue: {

@@ -9,7 +9,7 @@ const TodoRouter = express.Router();
 TodoRouter.use(authVerifier);
 
 TodoRouter.post("/new", async (req, res) => {
-  const { content, status, priority } = req.body;
+  const { content, status, priority, title, dueDate } = req.body;
   const userId = req.user.id;
 
   const todo = new TodoModel({
@@ -17,6 +17,8 @@ TodoRouter.post("/new", async (req, res) => {
     status,
     priority,
     userId,
+    title,
+    dueDate,
   });
 
   await todo.save();
@@ -48,7 +50,7 @@ TodoRouter.get("/user", async (req, res) => {
     }
 
     const resp = await TodoModel.find({ userId: userId });
-    res.status(200).json({ message: "success", todos: resp });
+    res.status(200).json({ todos: resp });
   } catch {
     res.status(400).json({ message: "Bad Request" });
   }
@@ -93,6 +95,22 @@ TodoRouter.put("/update/:taskId", async (req, res) => {
         { _id: todoId },
         {
           content: newValue,
+        }
+      );
+      break;
+    case "Update Title":
+      await TodoModel.findOneAndUpdate(
+        { _id: todoId },
+        {
+          title: newValue,
+        }
+      );
+      break;
+    case "Update Due Date":
+      await TodoModel.findOneAndUpdate(
+        { _id: todoId },
+        {
+          dueDate: newValue,
         }
       );
       break;
