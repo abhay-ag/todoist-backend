@@ -132,4 +132,16 @@ TodoRouter.delete("/delete/:todoId", async (req, res) => {
   });
 });
 
+TodoRouter.get("/updates/:taskId", async (req, res) => {
+  const taskId = req.params.taskId;
+
+  const resp = await EditTodo.findOne(
+    { todoId: taskId },
+    { actions: 1, _id: 0 }
+  );
+  console.log(resp);
+
+  res.status(200).json({ actions: resp });
+});
+
 export default TodoRouter;
