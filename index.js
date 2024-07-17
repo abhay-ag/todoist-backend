@@ -15,6 +15,10 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+app.get("/", (req, res) => {
+  res.send("hello world");
+});
+
 mongoose
   .connect(process.env.DB_URL)
   .then((success) => {
