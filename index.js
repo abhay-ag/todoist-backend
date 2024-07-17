@@ -24,11 +24,6 @@ mongoose
     console.log("Some error occured");
   });
 
-app.use((req, res, next) => {
-  console.log(req.url);
-  next();
-});
-
 app.use("/user", UserRouter);
 app.use("/todo", TodoRouter);
 

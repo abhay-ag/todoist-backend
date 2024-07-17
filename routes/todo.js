@@ -35,6 +35,7 @@ TodoRouter.post("/new", async (req, res) => {
   });
 
   await init.save();
+  delete todo.__v;
   res.status(200).json({ todo });
 });
 
